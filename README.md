@@ -15,3 +15,9 @@ This plugin is based on the zumba/swivel-cake plugin.
 ```php
 Yii::app()->swivel->forFeature( $slug );
 ```
+
+#### The Swivel Libraries 
+
+https://github.com/zumba/swivel 
+
+https://github.com/zumba/swivel-cake
