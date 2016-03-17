@@ -35,7 +35,6 @@ class SwivelComponent extends CApplicationComponent {
 
 		Yii::import( $this->extensionAlias.'.models.*');
 		Yii::import( $this->extensionAlias.'.components.*');
-		Yii::import( $this->extensionAlias.'.vendor.zumba.swivel.src.*');
 
 		if ( $this->autoCreateSwivelTable )
 		{
