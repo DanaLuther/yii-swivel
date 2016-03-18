@@ -23,13 +23,13 @@ location, simply update the extensionAlias in the configuration array.
 
 ### Access from the application
 ```php
-// If the user has the testFeature bucket enabled, use the testFeature.New.Something behavior, else use the default
+// If the user has the feature behavior bucket enabled, use the testFeature.New.Something behavior, else use the default
 Yii::app()->swivel->forFeature( 'testFeature' )
 	->addBehavior('New.Something', [$this,'doSomethingB'], $args)
 	->defaultBehavior([$this, 'doSomethingA'], $args )
 	->execute();
 
-// If the user has the testFeature bucket enabled, use the New.Something behavior, else use the default
+// If the user has the feature behavior bucket enabled, use the first callable, else use the second callable (default)
 Yii::app()->swivel->invoke('testFeature.New.Something', [$this,'doSomethingB'],[$this, 'doSomethingA']);
 ```
 
