@@ -30,15 +30,13 @@ class SwivelComponent extends CApplicationComponent {
 	/** @var string The Application component ID for the swivel database connection */
 	public $dbComponent = 'db';
 
-	/** @var bool Whether to require the autoloader from the indicated vendor library */
-	public $autoLoad = true;
 	/** @var string The class name for the model holding the swivel map data  */
 	public $modelClass = 'SwivelFeature';
 
 	/** @var string The name of the vendor directory where swivel is installed */
 	public $vendorDir = 'vendor';
 	/** @var string The alias for the location of this extension */
-	public $extensionAlias = 'application.extensions.swivel';
+	public $extensionAlias = 'application.vendor.DanaLuther.yii-swivel';
 
 	/** @var string The default Cookie to store the swivel bucket information for the user */
 	public $cookieName = 'Swivel_Bucket';
@@ -53,11 +51,6 @@ class SwivelComponent extends CApplicationComponent {
 
 		Yii::import( $this->extensionAlias.'.models.*');
 		Yii::import( $this->extensionAlias.'.components.*');
-
-		if ( $this->autoLoad )
-		{
-			require_once( Yii::getPathOfAlias( $this->extensionAlias ) . DIRECTORY_SEPARATOR . $this->vendorDir . DIRECTORY_SEPARATOR . 'autoload.php' );
-		}
 
 		if ( $this->autoCreateSwivelTable )
 		{

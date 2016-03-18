@@ -1,8 +1,8 @@
 {
     "name": "DanaLuther/yii-swivel",
-    "type": "yii-plugin",
+    "type": "yii-extension",
     "description": "A Yii 1.1* plugin to provide easy access to zumba/swivel",
-    "keywords": ["yii", "plugin", "swivel", "helper", "component", "behavior"],
+    "keywords": ["yii", "extension", "swivel", "helper", "component", "behavior"],
     "homepage": "https://github.com/DanaLuther/yii-swivel",
     "license": "MIT",
     "authors": [
