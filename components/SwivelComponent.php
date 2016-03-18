@@ -130,10 +130,21 @@ class SwivelComponent extends CApplicationComponent {
 			],
 			'BucketIndex' => $this->bucketIndex,
 			'LoaderAlias' => 'SwivelLoader',
-			'Logger' => null,
+			'Logger' => $this->getDefaultLogger(),
 			'Metrics' => null,
 			'ModelAlias' => $this->modelClass,
 		];
+	}
+
+	/**
+	 * Default Log option -- can be overridden by passing a different logger through the config, or by extending this
+	 * class and overriding the method
+	 * 
+	 * @return SwivelLogger
+	 */
+	protected function getDefaultLogger()
+	{
+		return new SwivelLogger();
 	}
 
 	/**
