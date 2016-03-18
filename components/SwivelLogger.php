@@ -16,47 +16,6 @@ class SwivelLogger extends \Psr\Log\AbstractLogger
 	public $category = 'application.swivel';
 
 	/**
-	 * System is unusable.
-	 *
-	 * @param string $message
-	 * @param array $context
-	 * @return null
-	 */
-	public function emergency($message, array $context = array())
-	{
-		$this->log( 'error', $message, $context);
-	}
-
-	/**
-	 * Action must be taken immediately.
-	 *
-	 * Example: Entire website down, database unavailable, etc. This should
-	 * trigger the SMS alerts and wake you up.
-	 *
-	 * @param string $message
-	 * @param array $context
-	 * @return null
-	 */
-	public function alert($message, array $context = array())
-	{
-		$this->log( 'error', $message, $context);
-	}
-
-	/**
-	 * Critical conditions.
-	 *
-	 * Example: Application component unavailable, unexpected exception.
-	 *
-	 * @param string $message
-	 * @param array $context
-	 * @return null
-	 */
-	public function critical($message, array $context = array())
-	{
-		$this->log( 'error', $message, $context);
-	}
-
-	/**
 	 * Logs with an arbitrary level.
 	 *
 	 * @param mixed $level
