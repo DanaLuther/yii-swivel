@@ -97,6 +97,21 @@ class SwivelComponent extends CApplicationComponent {
 		return $this->loader->getManager()->invoke($slug, $a, $b);
 	}
 
+
+	/**
+	 * Shorthand syntactic sugar for invoking a simple feature behavior using Builder::addValue.
+	 * Useful for ternary style code.
+	 *
+	 * @param $slug
+	 * @param $a
+	 * @param null $b
+	 *
+	 * @return mixed
+	 */
+	public function returnValue( $slug, $a, $b=null ) {
+		return $this->loader->getManager()->returnValue($slug, $a, $b );
+	}
+
 	/**
 	 * Default configuration options for the Loader
 	 *
