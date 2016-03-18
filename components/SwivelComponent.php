@@ -8,7 +8,7 @@
  * @author Dana Luther <dana.luther@gmail.com>
  * @yiiVersion 1.1.17
  */
-/** 
+/**
  * SwivelComponent
  *
  * @see http://www.yiiframework.com/docs/api/1.1/CApplicationComponent
@@ -22,12 +22,14 @@ class SwivelComponent extends CApplicationComponent {
 	protected $loader;
 	public $options = [];
 	public $autoCreateSwivelTable = true;
+	public $autoLoad = true;
 	public $swivelTableAlias = 'swivel';
 	public $modelClass = 'SwivelFeature';
 	public $cookieName = 'Swivel_Bucket';
 	public $dbComponent = 'db';
+	public $vendorDir = 'vendor';
 
-	public $extensionAlias = 'app.extensions.swivel';
+	public $extensionAlias = 'application.extensions.swivel';
 
 	public function init()
 	{
@@ -35,6 +37,11 @@ class SwivelComponent extends CApplicationComponent {
 
 		Yii::import( $this->extensionAlias.'.models.*');
 		Yii::import( $this->extensionAlias.'.components.*');
+
+		if ( $this->autoLoad )
+		{
+			require_once( Yii::getPathOfAlias( $this->extensionAlias ) . DIRECTORY_SEPARATOR . $this->vendorDir . DIRECTORY_SEPARATOR . 'autoload.php' );
+		}
 
 		if ( $this->autoCreateSwivelTable )
 		{
@@ -49,6 +56,8 @@ class SwivelComponent extends CApplicationComponent {
 		}
 
 		$this->loader = new SwivelLoader( CMap::mergeArray( $this->getDefaultOptions(), $this->options ));
+
+
 	}
 
 	/**
@@ -112,6 +121,3 @@ class SwivelComponent extends CApplicationComponent {
 		);
 	}
 }
-
-// Tell Yii to use the extension's vendor auto loader
-require_once ( dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'autoload.php');
