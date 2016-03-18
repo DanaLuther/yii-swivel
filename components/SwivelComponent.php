@@ -20,16 +20,32 @@ class SwivelComponent extends CApplicationComponent {
 
 	/** @var SwivelLoader */
 	protected $loader;
+	/** @var array Options to be passed to the Config */
 	public $options = [];
+	
+	/** @var bool Whether to create the swivel table automatically when it does not exist */
 	public $autoCreateSwivelTable = true;
-	public $autoLoad = true;
+	/** @var string The table name to be used to store the swivel features and associated buckets */
 	public $swivelTableAlias = 'swivel';
-	public $modelClass = 'SwivelFeature';
-	public $cookieName = 'Swivel_Bucket';
+	/** @var string The Application component ID for the swivel database connection */
 	public $dbComponent = 'db';
-	public $vendorDir = 'vendor';
 
+	/** @var bool Whether to require the autoloader from the indicated vendor library */
+	public $autoLoad = true;
+	/** @var string The class name for the model holding the swivel map data  */
+	public $modelClass = 'SwivelFeature';
+
+	/** @var string The name of the vendor directory where swivel is installed */
+	public $vendorDir = 'vendor';
+	/** @var string The alias for the location of this extension */
 	public $extensionAlias = 'application.extensions.swivel';
+
+	/** @var string The default Cookie to store the swivel bucket information for the user */
+	public $cookieName = 'Swivel_Bucket';
+	/** @var string The name of the property on the application user model that holds their assigned bucket identifier */
+	public $userBucketProperty = 'bucketIndex';
+	/** @var null|int The default bucket ID - if null, one will be randomly generated and assigned */
+	public $bucketIndex = null;
 
 	public function init()
 	{
@@ -53,6 +69,12 @@ class SwivelComponent extends CApplicationComponent {
 			{
 				$this->initSwivelTable( $db, $this->swivelTableAlias );
 			}
+		}
+
+		// If we have a registered user, assume they should have some property or magic method that holds their bucket ID
+		if ( !Yii::app()->user->isGuest )
+		{
+			$this->bucketIndex = Yii::app()->user->{$this->userBucketProperty};
 		}
 
 		$this->loader = new SwivelLoader( CMap::mergeArray( $this->getDefaultOptions(), $this->options ));
@@ -98,7 +120,7 @@ class SwivelComponent extends CApplicationComponent {
 				'secure' => false,
 				'httpOnly' => false
 			],
-			'BucketIndex' => null,
+			'BucketIndex' => $this->bucketIndex,
 			'LoaderAlias' => 'SwivelLoader',
 			'Logger' => null,
 			'Metrics' => null,
