@@ -11,7 +11,7 @@
 /** 
  * SwivelFeature
  *
- * @see http://www.yiiframework.com/docs/api/1.1/CModel
+ * @see http://www.yiiframework.com/docs/api/1.1/CActiveRecord
  * @author Dana Luther <dana.luther@gmail.com>
  * @version 1.0
  * @yiiVersion 1.1.17

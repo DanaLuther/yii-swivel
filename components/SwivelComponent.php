@@ -36,7 +36,7 @@ class SwivelComponent extends CApplicationComponent {
 	/** @var string The name of the vendor directory where swivel is installed */
 	public $vendorDir = 'vendor';
 	/** @var string The alias for the location of this extension */
-	public $extensionAlias = 'application.vendor.DanaLuther.yii-swivel';
+	public $extensionAlias = 'application.vendor.dhluther.yii-swivel';
 
 	/** @var string The default Cookie to store the swivel bucket information for the user */
 	public $cookieName = 'Swivel_Bucket';
