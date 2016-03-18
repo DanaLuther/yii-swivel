@@ -43,7 +43,7 @@ class SwivelFeature extends CActiveRecord {
 	{
 		return [
 			['slug','safe'],    // MediumText by default
-		    ['buckets','string','max'=>254], // Tinytext by default
+		    ['buckets','length','max'=>254], // Tinytext by default
 		];
 	}
 
