@@ -166,14 +166,6 @@ class SwivelComponent extends CApplicationComponent {
 	protected function getDefaultOptions()
 	{
 		return [
-			'Cookie' => [
-				'name' => $this->cookieName,
-				'expire' => 0,
-				'path' => '/',
-				'domain' => Yii::app()->request->hostInfo,
-				'secure' => false,
-				'httpOnly' => false
-			],
 			'BucketIndex' => $this->bucketIndex,
 			'LoaderAlias' => 'SwivelLoader',
 			'Logger' => $this->getLogger(),

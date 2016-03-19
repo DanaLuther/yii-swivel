@@ -13,16 +13,9 @@
     ],
     "require": {
         "php": ">=5.4",
-        "composer/installers": "1.0.*",
         "zumba/swivel": "2.*"
     },
     "support": {
         "source": "https://github.com/DanaLuther/yii-swivel"
-    },
-    "config": {
-        "vendor-dir": "vendor"
-    },
-    "extra": {
-        "installer-name": "Swivel"
     }
 }
