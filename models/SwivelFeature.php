@@ -17,7 +17,7 @@
  *
  * @property string $slug           Name of the feature
  * @property string $buckets        Comma separated list of bucket IDs
- * @property-read [] $bucketData    Array of bucket IDs associated with this feature
+ * @property-read array $bucketData Array of bucket IDs associated with this feature
  */
 class SwivelFeature extends CActiveRecord {
 
@@ -33,11 +33,17 @@ class SwivelFeature extends CActiveRecord {
 		return parent::model( $className );
 	}
 
+	/**
+	 * @return string
+	 */
 	public function tableName()
 	{
 		return 'swivel';
 	}
 
+	/**
+	 * @return array
+	 */
 	public function rules()
 	{
 		return [
@@ -46,6 +52,9 @@ class SwivelFeature extends CActiveRecord {
 		];
 	}
 
+	/**
+	 * @return false|string[]
+	 */
 	public function getBucketData()
 	{
 		return explode( self::DELIMITER, $this->buckets );

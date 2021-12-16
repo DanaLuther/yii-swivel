@@ -21,7 +21,7 @@ class SwivelLogger extends \Psr\Log\AbstractLogger
 	 * @param array $context
 	 * @return void
 	 */
-	public function log($level, $message, array $context = array()){
+	public function log($level, $message, array $context = []){
 		Yii::log( $message.PHP_EOL.CVarDumper::dumpAsString($context), $level , $this->category );
 	}
 }

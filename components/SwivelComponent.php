@@ -73,7 +73,7 @@ class SwivelComponent extends CApplicationComponent {
 	 *
 	 * @var callable The function or method to be called to generate the bucket index
 	 */
-	public $generatorCallable = "mt_rand";
+	public $generatorCallable = 'mt_rand';
 	/**
 	 * @var array Arguments to be passed to the generator
 	 */
@@ -84,6 +84,10 @@ class SwivelComponent extends CApplicationComponent {
 	 */
 	protected $_logger;
 
+	/**
+	 * @return void
+	 * @throws CException
+	 */
 	public function init()
 	{
 		parent::init();
