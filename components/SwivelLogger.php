@@ -1,6 +1,4 @@
 <?php
-
-
 /**
  * SwivelLogger.php
  *
@@ -21,9 +19,9 @@ class SwivelLogger extends \Psr\Log\AbstractLogger
 	 * @param mixed $level
 	 * @param string $message
 	 * @param array $context
-	 * @return null
+	 * @return void
 	 */
 	public function log($level, $message, array $context = array()){
-		return Yii::log( $message.PHP_EOL.CVarDumper::dumpAsString($context), $level , $this->category );
+		Yii::log( $message.PHP_EOL.CVarDumper::dumpAsString($context), $level , $this->category );
 	}
 }

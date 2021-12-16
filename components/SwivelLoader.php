@@ -1,5 +1,4 @@
 <?php
-
 /**
  * SwivelLoader.php
  *
@@ -109,7 +108,7 @@ class SwivelLoader extends CComponent
 	/**
 	 * Used to set the bucket index before loading swivel.
 	 *
-	 * @param integer $index Number between 1 and 10
+	 * @param int $index Number between 1 and 10
 	 *
 	 * @return void
 	 * @throws InvalidArgumentException if $index is not valid

@@ -1,5 +1,4 @@
 <?php
-
 /** 
  * SwivelComponent.php
  *
