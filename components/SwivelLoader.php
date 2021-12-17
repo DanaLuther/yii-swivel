@@ -8,6 +8,10 @@
  * @yiiVersion 1.1.17
  */
 
+namespace dhluther\YiiSwivel\components;
+
+use dhluther\YiiSwivel\models\SwivelFeature;
+
 /**
  * SwivelLoader
  *
@@ -16,7 +20,7 @@
  * @version    1.0
  * @yiiVersion 1.1.17
  */
-class SwivelLoader extends CComponent
+class SwivelLoader extends \CComponent
 {
 	/**
 	 * Swivel config
@@ -42,7 +46,7 @@ class SwivelLoader extends CComponent
 	 *
 	 * @param array $options
 	 */
-	public function __construct( $options )
+	public function __construct($options)
 	{
 		$this->options = $options;
 	}
@@ -54,17 +58,15 @@ class SwivelLoader extends CComponent
 	 */
 	public function getConfig()
 	{
-		if ( empty($this->config) )
-		{
+		if (empty($this->config)) {
 			$options = $this->options;
 			$this->config = new \Zumba\Swivel\Config(
 				$this->getModel()->getMapData(),
-				$options[ 'BucketIndex' ],
-				$options[ 'Logger' ]
+				$options['BucketIndex'],
+				$options['Logger']
 			);
-			if ( !empty($options[ 'Metrics' ]) )
-			{
-				$this->config->setMetrics( $options[ 'Metrics' ] );
+			if (!empty($options['Metrics'])) {
+				$this->config->setMetrics($options['Metrics']);
 			}
 		}
 
@@ -90,7 +92,7 @@ class SwivelLoader extends CComponent
 	 */
 	protected function getModel()
 	{
-		return SwivelFeature::model( $this->options[ 'ModelAlias' ] );
+		return SwivelFeature::model($this->options['ModelAlias']);
 	}
 
 	/**
@@ -100,8 +102,7 @@ class SwivelLoader extends CComponent
 	 */
 	protected function load()
 	{
-		$this->manager = new \Zumba\Swivel\Manager( $this->getConfig() );
-
+		$this->manager = new \Zumba\Swivel\Manager($this->getConfig());
 		return $this->manager;
 	}
 
@@ -111,22 +112,19 @@ class SwivelLoader extends CComponent
 	 * @param int $index Number between 1 and 10
 	 *
 	 * @return void
-	 * @throws InvalidArgumentException if $index is not valid
+	 * @throws \InvalidArgumentException if $index is not valid
 	 */
-	public function setBucketIndex( $index )
+	public function setBucketIndex($index)
 	{
-		if ( !is_numeric( $index ) || $index < 1 || $index > 10 )
-		{
-			throw new InvalidArgumentException( "$index is not a valid bucket index." );
+		if (!is_numeric($index) || $index < 1 || $index > 10) {
+			throw new \InvalidArgumentException("$index is not a valid bucket index.");
 		}
-		if ( empty($this->manager) )
-		{
+		if (empty($this->manager)) {
 			$this->options[ 'BucketIndex' ] = $index;
-		} else
-		{
+		} else {
 			$config = $this->getConfig();
-			$config->setBucketIndex( $index );
-			$this->manager->setBucket( $config->getBucket() );
+			$config->setBucketIndex($index);
+			$this->manager->setBucket($config->getBucket());
 		}
 	}
 }

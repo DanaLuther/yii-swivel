@@ -1,12 +1,17 @@
 <?php
-/** 
+/**
  * SwivelComponent.php
  *
- * @created 3/17/16 
+ * @created 3/17/16
  * @version 1.0
  * @author Dana Luther <dana.luther@gmail.com>
  * @yiiVersion 1.1.17
  */
+
+namespace dhluther\YiiSwivel\components;
+
+use dhluther\YiiSwivel\models\SwivelFeature;
+
 /**
  * SwivelComponent
  *
@@ -15,7 +20,8 @@
  * @version 1.0
  * @yiiVersion 1.1.17
  */
-class SwivelComponent extends CApplicationComponent {
+class SwivelComponent extends \CApplicationComponent
+{
 
 	/**
 	 * @var SwivelLoader
@@ -42,7 +48,7 @@ class SwivelComponent extends CApplicationComponent {
 	/**
 	 * @var string The class name for the model holding the swivel map data
 	 */
-	public $modelClass = 'SwivelFeature';
+	public $modelClass = SwivelFeature::class;
 
 	/**
 	 * @var string The name of the vendor directory where swivel is installed
@@ -77,7 +83,7 @@ class SwivelComponent extends CApplicationComponent {
 	/**
 	 * @var array Arguments to be passed to the generator
 	 */
-	public $generatorArgs = [1,10];
+	public $generatorArgs = [1, 10];
 
 	/**
 	 * @var \Psr\Log\LoggerInterface
@@ -86,42 +92,36 @@ class SwivelComponent extends CApplicationComponent {
 
 	/**
 	 * @return void
-	 * @throws CException
+	 * @throws \CException
 	 */
 	public function init()
 	{
 		parent::init();
 
-		Yii::import( $this->extensionAlias.'.models.*');
-		Yii::import( $this->extensionAlias.'.components.*');
+		\Yii::import($this->extensionAlias . '.models.*');
+		\Yii::import($this->extensionAlias . '.components.*');
 
-		if ( $this->autoCreateSwivelTable )
-		{
-			/** @var CDbConnection $db */
-			$db = Yii::app()->getComponent( $this->dbComponent );
+		if ($this->autoCreateSwivelTable) {
+			/** @var \CDbConnection $db */
+			$db = \Yii::app()->getComponent($this->dbComponent);
 			try {
-				$db->createCommand()->delete( $this->swivelTableAlias, '0=1');
-			} catch ( Exception $e )
-			{
-				$this->initSwivelTable( $db, $this->swivelTableAlias );
+				$db->createCommand()->delete($this->swivelTableAlias, '0=1');
+			} catch (\Exception $e) {
+				$this->initSwivelTable($db, $this->swivelTableAlias);
 			}
 		}
 
 		// If we have a registered user, assume they should have some property or magic method that holds their bucket ID
-		if ( $this->userBucketProperty )
-		{
-			$this->bucketIndex = Yii::app()->user->{$this->userBucketProperty};
+		if ($this->userBucketProperty) {
+			$this->bucketIndex = \Yii::app()->user->{$this->userBucketProperty};
 		}
 		// If no bucket has been selected, establish a cookie for the bucket identifier and use that for the duration
 		// of the user's time on site - otherwise they will get a different bucket with each page load
-		if ( !$this->bucketIndex )
-		{
+		if (!$this->bucketIndex) {
 			$this->bucketIndex = $this->checkAndApplyIndex();
 		}
 
-		$this->loader = new SwivelLoader( CMap::mergeArray( $this->getDefaultOptions(), $this->options ));
-
-
+		$this->loader = new SwivelLoader(\CMap::mergeArray($this->getDefaultOptions(), $this->options));
 	}
 
 	/**
@@ -129,9 +129,9 @@ class SwivelComponent extends CApplicationComponent {
 	 *
 	 * @return \Zumba\Swivel\Builder
 	 */
-	public function forFeature( $slug )
+	public function forFeature($slug)
 	{
-		return $this->loader->getManager()->forFeature( $slug );
+		return $this->loader->getManager()->forFeature($slug);
 	}
 
 	/**
@@ -142,7 +142,8 @@ class SwivelComponent extends CApplicationComponent {
 	 * @param mixed $b
 	 * @return mixed
 	 */
-	public function invoke($slug, $a, $b = null) {
+	public function invoke($slug, $a, $b = null)
+	{
 		return $this->loader->getManager()->invoke($slug, $a, $b);
 	}
 
@@ -157,8 +158,9 @@ class SwivelComponent extends CApplicationComponent {
 	 *
 	 * @return mixed
 	 */
-	public function returnValue( $slug, $a, $b=null ) {
-		return $this->loader->getManager()->returnValue($slug, $a, $b );
+	public function returnValue($slug, $a, $b = null)
+	{
+		return $this->loader->getManager()->returnValue($slug, $a, $b);
 	}
 
 	/**
@@ -171,9 +173,9 @@ class SwivelComponent extends CApplicationComponent {
 		return [
 			'BucketIndex' => $this->bucketIndex,
 			'LoaderAlias' => 'SwivelLoader',
-			'Logger' => $this->getLogger(),
-			'Metrics' => null,
-			'ModelAlias' => $this->modelClass,
+			'Logger'      => $this->getLogger(),
+			'Metrics'     => null,
+			'ModelAlias'  => $this->modelClass,
 		];
 	}
 
@@ -183,12 +185,14 @@ class SwivelComponent extends CApplicationComponent {
 	 */
 	protected function checkAndApplyIndex()
 	{
-		if ( !Yii::app()->user->hasState( $this->cookieName ))
-		{
-			Yii::app()->user->setState( $this->cookieName,  $this->defaultBucketGenerator() );
-			$this->getLogger()->debug( 'Set default bucket value for new user.', [ 'Bucket ID' => Yii::app()->user->getState( $this->cookieName ) ] );
+		if (!\Yii::app()->user->hasState($this->cookieName)) {
+			\Yii::app()->user->setState($this->cookieName, $this->defaultBucketGenerator());
+			$this->getLogger()->debug(
+				'Set default bucket value for new user.',
+				['Bucket ID' => \Yii::app()->user->getState($this->cookieName)]
+			);
 		}
-		return Yii::app()->user->getState( $this->cookieName );
+		return \Yii::app()->user->getState($this->cookieName);
 	}
 
 	/**
@@ -199,7 +203,7 @@ class SwivelComponent extends CApplicationComponent {
 	 */
 	public function defaultBucketGenerator()
 	{
-		return call_user_func_array( $this->generatorCallable, $this->generatorArgs );
+		return call_user_func_array($this->generatorCallable, $this->generatorArgs);
 	}
 
 	/**
@@ -214,24 +218,31 @@ class SwivelComponent extends CApplicationComponent {
 	}
 
 	/**
-	 * @param CDbConnection $db
+	 * @param \CDbConnection $db
 	 * @param string $tableName
 	 */
-	protected function initSwivelTable( $db, $tableName  )
+	protected function initSwivelTable($db, $tableName)
 	{
-		$db->createCommand()->createTable($tableName, [
-				'id'=>'INT PRIMARY KEY AUTO_INCREMENT',
-				'slug'=>'MEDIUMTEXT',   // enable more than 254 chars for slug since they have . subfeatures
-				'buckets'=>'TINYTEXT',  // 10 bucket system, so never more than 18 chars currently
-				'INDEX ix_slug( slug(8) )',
-			]
-		);
+		// MySQL structure by default
+		$fields = [
+			'id'      => 'INT PRIMARY KEY AUTO_INCREMENT',
+			'slug'    => 'MEDIUMTEXT',   // enable more than 254 chars for slug since they have . subfeatures
+			'buckets' => 'TINYTEXT',  // 10 bucket system, so never more than 18 chars currently
+			'INDEX ix_slug( slug(8) )'
+		];
+
+		if (strstr($db->connectionString, 'sqlite:')) {
+			$fields['id'] = 'INT PRIMARY KEY'; // sqlite does not support AUTO_INCREMENT
+			array_pop($fields); // index option is not supported
+		}
+
+		$db->createCommand()->createTable($tableName, $fields);
 	}
 
 	/**
 	 * @param \Psr\Log\LoggerInterface $logger
 	 */
-	public function setLogger( \Psr\Log\LoggerInterface $logger )
+	public function setLogger(\Psr\Log\LoggerInterface $logger)
 	{
 		$this->_logger = $logger;
 	}
@@ -241,8 +252,7 @@ class SwivelComponent extends CApplicationComponent {
 	 */
 	public function getLogger()
 	{
-		if ( !$this->_logger )
-		{
+		if (!$this->_logger) {
 			$this->_logger = $this->getDefaultLogger();
 		}
 		return $this->_logger;

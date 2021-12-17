@@ -1,2 +1,4 @@
 vendor/*
 composer.lock
+tests/testdata.sqlite
+.phpunit.result.cache

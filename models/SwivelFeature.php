@@ -1,13 +1,16 @@
 <?php
-/** 
+/**
  * SwivelFeature.php
  *
- * @created 3/17/16 
+ * @created 3/17/16
  * @version 1.0
  * @author Dana Luther <dana.luther@gmail.com>
  * @yiiVersion 1.1.17
  */
-/** 
+
+namespace dhluther\YiiSwivel\models;
+
+/**
  * SwivelFeature
  *
  * @see http://www.yiiframework.com/docs/api/1.1/CActiveRecord
@@ -19,18 +22,19 @@
  * @property string $buckets        Comma separated list of bucket IDs
  * @property-read array $bucketData Array of bucket IDs associated with this feature
  */
-class SwivelFeature extends CActiveRecord {
+class SwivelFeature extends \CActiveRecord
+{
 
-	const DELIMITER = ',';
+	public const DELIMITER = ',';
 
 	/**
 	 * @param string $className
 	 *
 	 * @return SwivelFeature
 	 */
-	public static function model( $className=__CLASS__ )
+	public static function model($className = __CLASS__)
 	{
-		return parent::model( $className );
+		return parent::model($className);
 	}
 
 	/**
@@ -47,8 +51,8 @@ class SwivelFeature extends CActiveRecord {
 	public function rules()
 	{
 		return [
-			['slug','safe'],    // MediumText by default
-		    ['buckets','length','max'=>254], // Tinytext by default
+			['slug', 'safe'],    // MediumText by default
+			['buckets', 'length', 'max' => 254], // Tinytext by default
 		];
 	}
 
@@ -57,7 +61,7 @@ class SwivelFeature extends CActiveRecord {
 	 */
 	public function getBucketData()
 	{
-		return explode( self::DELIMITER, $this->buckets );
+		return explode(self::DELIMITER, $this->buckets);
 	}
 
 	/**
@@ -65,9 +69,9 @@ class SwivelFeature extends CActiveRecord {
 	 *
 	 * @return array
 	 */
-	protected function formatRow(  )
+	protected function formatRow()
 	{
-		return [ $this->slug => $this->getBucketData() ];
+		return [$this->slug => $this->getBucketData()];
 	}
 
 	/**
@@ -78,14 +82,12 @@ class SwivelFeature extends CActiveRecord {
 	public function getMapData()
 	{
 		$data = SwivelFeature::model()->findAll();
-		if ( empty( $data ))
-		{
-			return[];
+		if (empty($data)) {
+			return [];
 		}
 		$map = [];
-		foreach( $data as $row )
-		{
-			$map = CMap::mergeArray($map, $row->formatRow() );
+		foreach ($data as $row) {
+			$map = \CMap::mergeArray($map, $row->formatRow());
 		}
 		return $map;
 	}

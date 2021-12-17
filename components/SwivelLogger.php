@@ -9,6 +9,13 @@
  * @author        Dana Luther <dana.luther@gmail.com>
  * @yiiVersion    1.1.17
  */
+
+namespace dhluther\YiiSwivel\components;
+
+/**
+ * SwivelLogger
+ * Enables the built in Swivel log to write to the Yii logger.
+ */
 class SwivelLogger extends \Psr\Log\AbstractLogger
 {
 	public $category = 'application.swivel';
@@ -21,7 +28,8 @@ class SwivelLogger extends \Psr\Log\AbstractLogger
 	 * @param array $context
 	 * @return void
 	 */
-	public function log($level, $message, array $context = []){
-		Yii::log( $message.PHP_EOL.CVarDumper::dumpAsString($context), $level , $this->category );
+	public function log($level, $message, array $context = [])
+	{
+		\Yii::log($message . PHP_EOL . \CVarDumper::dumpAsString($context), $level, $this->category);
 	}
 }
